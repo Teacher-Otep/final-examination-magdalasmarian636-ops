@@ -1,38 +1,53 @@
-//fucntion to show selected section
-function showSection(sectionID){
-    //initially, select all sections
-    // use querySelectorAll for all sections with class content and homecontent
-    const sections = document.querySelectorAll('.content');
-    const homesection = document.querySelectorAll('.homecontent');
+// script.js
 
-    //hide the resulting content sections using foreach
+// Function to show selected section and hide ALL others (Requirement: UX Design)
+function showSection(sectionID) {
+    const sections = document.querySelectorAll('.content');
+    const homeSection = document.querySelector('.homecontent');
+
+    // Hide home section
+    homeSection.style.display = 'none';
+
+    // Hide all content sections
     sections.forEach(section => {
-        section.style.display='none';
+        section.style.display = 'none';
     });
 
-
-    //select the section that would
-    //be displayed when clicked
+    // Show the active one
     const activeSection = document.getElementById(sectionID);
-    if(activeSection){
-        activeSection.style.display='block';
+    if (activeSection) {
+        activeSection.style.display = 'block';
     }
 }
 
-//for the insertion success
+// Requirement: Hide 'content' sections when logo is clicked
+function hideAllSections() {
+    const sections = document.querySelectorAll('.content');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+    // Optional: Show home again
+    document.querySelector('.homecontent').style.display = 'block';
+}
+
+// Requirement: Clear Fields button function
+function clearFields() {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.value = '';
+    });
+}
+
+// Existing Toast Logic
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('status') === 'success') {
         const toast = document.getElementById('success-toast');
         toast.classList.remove('toast-hidden');
-        
-        // Hide it automatically after 3 seconds
         setTimeout(() => {
             toast.style.opacity = '0';
             setTimeout(() => toast.classList.add('toast-hidden'), 500);
         }, 3000);
-
-        // Clean the URL
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 }
